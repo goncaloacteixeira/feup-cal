@@ -6,6 +6,7 @@
 #define CHANGE_H_
 
 #include <string>
+
 using namespace std;
 
 /* Calcula o troco num determinado montante m, utilizando um número mínimo

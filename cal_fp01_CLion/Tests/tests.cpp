@@ -26,11 +26,11 @@ TEST(CAL_FP01, CalcChangeTest) {
 
 	EXPECT_EQ("5;",calcChange(5, numCoins, coinValues));
 	EXPECT_EQ("5;5;5;1;",calcChange(16, numCoins, coinValues));
-	//EXPECT_EQ("",calcChange(0, numCoins, coinValues));
+	EXPECT_EQ("",calcChange(0, numCoins, coinValues));
 
 	int numCoins2 = 2;
 	int coinValues2[] = {2, 5};
-	//EXPECT_EQ("-", calcChange(1, numCoins2, coinValues2));
+	EXPECT_EQ("-", calcChange(1, numCoins2, coinValues2));
 	EXPECT_EQ("5;2;",calcChange(7, numCoins2, coinValues2));
 
 	int numCoins3 = 3;
