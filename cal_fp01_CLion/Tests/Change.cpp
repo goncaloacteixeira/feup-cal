@@ -41,6 +41,13 @@
  *
  */
 
+/**
+ * @brief Função para mostrar tabelas de arrays 2d (minCoins e lastCoin)
+ * @param m
+ * @param numCoins
+ * @param coinValues
+ * @param table
+ */
 void printTable(int m, int numCoins, int* coinValues, int** table) {
     cout << "i/j";
     for (int j = 1; j < m + 1; j++) {
