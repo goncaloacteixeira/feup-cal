@@ -4,6 +4,7 @@
 
 #include "Sum.h"
 #include <chrono>
+#include <fstream>
 
 string calcSum(int* sequence, int size)
 {
@@ -44,7 +45,43 @@ string calcSum(int* sequence, int size)
         res += min[i];
     }
 
-
 	return res;
 }
+
+
+int graph() {
+    int n = 10;
+
+    int *arr;
+    ofstream myCSV;
+    myCSV.open("../results.csv");
+
+    if (!myCSV.is_open()) {
+        return 1;
+    }
+
+    myCSV << "n,time(ms)" << endl;
+
+    while (n < 500) {
+        double time = 0;
+        for (int i = 1; i <= 1000; i++) {
+            arr = (int*) malloc (n*sizeof(int));
+            for (int j = 0; j < n; j++) {
+                arr[j] = rand() % 10*n;
+            }
+            auto start = chrono::high_resolution_clock::now();
+            calcSum(arr, n);
+            auto end = chrono::high_resolution_clock::now();
+            free(arr);
+            time += chrono::duration_cast<chrono::milliseconds>(end-start).count();
+        }
+
+        myCSV << n << "," << time/1000.0 << endl;
+        n += 10;
+    }
+    return 0;
+}
+
+
+
 

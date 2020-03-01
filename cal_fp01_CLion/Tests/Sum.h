@@ -23,4 +23,7 @@ using namespace std;
  */
 string calcSum(int* sequence, int size);
 
+int graph();
+
+
 #endif /* SUM_H_ */
