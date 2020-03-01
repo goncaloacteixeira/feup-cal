@@ -62,7 +62,7 @@ int graph() {
 
     myCSV << "n,time(ms)" << endl;
 
-    while (n < 500) {
+    while (n <= 500) {
         double time = 0;
         for (int i = 1; i <= 1000; i++) {
             arr = (int*) malloc (n*sizeof(int));
