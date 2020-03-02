@@ -86,6 +86,7 @@ TEST(CAL_FP02, testSudokuNoneBackStepsRequired) {
     for (int a = 0; a < 9; a++)
     sout[i][a] = res[i][a];
 
+
     compareSudokus(out, sout);
 }
 

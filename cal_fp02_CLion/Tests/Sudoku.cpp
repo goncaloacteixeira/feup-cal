@@ -7,38 +7,33 @@
 
 /** Inicia um Sudoku vazio.
  */
-Sudoku::Sudoku()
-{
-	this->initialize();
+Sudoku::Sudoku() {
+    this->initialize();
 }
 
 /**
- * Inicia um Sudoku com um conteúdo inicial.
- * Lança excepção IllegalArgumentException se os valores
- * estiverem fora da gama de 1 a 9 ou se existirem números repetidos
+ * Inicia um Sudoku com um conteudo inicial.
+ * LanÃ§a excepÃ§Ã£o IllegalArgumentException se os valores
+ * estiverem fora da gama de 1 a 9 ou se existirem nÃºmeros repetidos
  * por linha, coluna ou bloc 3x3.
  *
  * @param nums matriz com os valores iniciais (0 significa por preencher)
  */
-Sudoku::Sudoku(int nums[9][9])
-{
-	this->initialize();
+Sudoku::Sudoku(int nums[9][9]) {
+    this->initialize();
 
-	for (int i = 0; i < 9; i++)
-	{
-		for (int j = 0; j < 9; j++)
-		{
-			if (nums[i][j] != 0)
-			{
-				int n = nums[i][j];
-				numbers[i][j] = n;
-				lineHasNumber[i][n] = true;
-				columnHasNumber[j][n] = true;
-				block3x3HasNumber[i / 3][j / 3][n] = true;
-				countFilled++;
-			}
-		}
-	}
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (nums[i][j] != 0) {
+                int n = nums[i][j];
+                numbers[i][j] = n;
+                lineHasNumber[i][n] = true;
+                columnHasNumber[j][n] = true;
+                block3x3HasNumber[i / 3][j / 3][n] = true;
+                countFilled++;
+            }
+        }
+    }
 }
 
 void Sudoku::initialize()
@@ -61,7 +56,7 @@ void Sudoku::initialize()
 }
 
 /**
- * Obtem o conteúdo actual (só para leitura!).
+ * Obtem o conteÃºdo actual (sÃ³ para leitura!).
  */
 int** Sudoku::getNumbers()
 {
@@ -79,22 +74,66 @@ int** Sudoku::getNumbers()
 }
 
 /**
- * Verifica se o Sudoku já está completamente resolvido
+ * Verifica se o Sudoku jÃ¡ estÃ¡ completamente resolvido
  */
 bool Sudoku::isComplete()
 {
-	return countFilled == 9 * 9;
+    int filled = 0;
+	for (int i = 0; i < 9; i++) {
+	    for (int j = 0; j < 9; j++) {
+	        if (this->numbers[i][j] != 0) {
+	            filled++;
+	        }
+	    }
+	}
+	return filled == 9*9;
 }
-
 
 
 /**
  * Resolve o Sudoku.
- * Retorna indicação de sucesso ou insucesso (sudoku impossível).
+ * Retorna indicaÃ§Ã£o de sucesso ou insucesso (sudoku impossÃ­vel).
  */
-bool Sudoku::solve()
-{
-	return false;
+bool Sudoku::solve() {
+    if (this->isComplete()) {
+        return true;
+    }
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (this->numbers[i][j] == 0) {
+                for (int k = 1; k <= 9; k++) {
+
+                    if (this->lineHasNumber[i][k] || this->columnHasNumber[j][k])
+                        continue;
+
+                    bool found = false;
+                    for (int row = 0; row < 3; row++) {
+                        for (int col = 0; col < 3; col++) {
+                            if (this->numbers[row + i - i % 3][col + j - j % 3] == k)
+                                found = true;
+                        }
+                        if (found)
+                            break;
+                    }
+                    if (found)
+                        continue;
+
+
+                    this->numbers[i][j] = k;
+                    this->lineHasNumber[i][k] = true;
+                    this->columnHasNumber[j][k] = true;
+                    if (solve()) {
+                        return true;
+                    }
+                    this->lineHasNumber[i][k] = false;
+                    this->columnHasNumber[j][k] = false;
+                    this->numbers[i][j] = 0;
+                }
+                return false;
+            }
+        }
+    }
+    return false;
 }
 
 
