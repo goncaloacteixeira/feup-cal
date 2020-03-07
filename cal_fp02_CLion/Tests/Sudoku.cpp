@@ -78,15 +78,7 @@ int** Sudoku::getNumbers()
  */
 bool Sudoku::isComplete()
 {
-    int filled = 0;
-	for (int i = 0; i < 9; i++) {
-	    for (int j = 0; j < 9; j++) {
-	        if (this->numbers[i][j] != 0) {
-	            filled++;
-	        }
-	    }
-	}
-	return filled == 9*9;
+    return this->countFilled == 9 * 9;
 }
 
 
@@ -102,32 +94,28 @@ bool Sudoku::solve() {
         for (int j = 0; j < 9; j++) {
             if (this->numbers[i][j] == 0) {
                 for (int k = 1; k <= 9; k++) {
-
-                    if (this->lineHasNumber[i][k] || this->columnHasNumber[j][k])
+                    // Greedy
+                    if (this->lineHasNumber[i][k] || this->columnHasNumber[j][k] || this->block3x3HasNumber[i / 3][j / 3][k])
                         continue;
 
-                    bool found = false;
-                    for (int row = 0; row < 3; row++) {
-                        for (int col = 0; col < 3; col++) {
-                            if (this->numbers[row + i - i % 3][col + j - j % 3] == k)
-                                found = true;
-                        }
-                        if (found)
-                            break;
-                    }
-                    if (found)
-                        continue;
-
-
+                    // Colocar os valores corretamente
                     this->numbers[i][j] = k;
                     this->lineHasNumber[i][k] = true;
                     this->columnHasNumber[j][k] = true;
+                    this->block3x3HasNumber[i / 3][j / 3][k] = true;
+                    countFilled++;
+
                     if (solve()) {
                         return true;
                     }
+
+                    // Caso não funcione, resetar os valores para
+                    // o padrão
                     this->lineHasNumber[i][k] = false;
                     this->columnHasNumber[j][k] = false;
+                    this->block3x3HasNumber[i / 3][j / 3][k] = false;
                     this->numbers[i][j] = 0;
+                    countFilled--;
                 }
                 return false;
             }
@@ -135,7 +123,6 @@ bool Sudoku::solve() {
     }
     return false;
 }
-
 
 
 /**
