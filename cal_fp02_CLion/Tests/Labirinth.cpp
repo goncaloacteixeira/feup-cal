@@ -55,5 +55,3 @@ bool Labirinth::findGoal(int x, int y) {
         return false;
     }
 }
-
-
