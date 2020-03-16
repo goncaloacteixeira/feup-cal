@@ -31,7 +31,6 @@ void createNetwork(Graph<Person> & net1)
 }
 
 TEST(CAL_FP04, test_addVertex) {
-    /* //uncomment test body below!
     Graph<Person> net1;
     Person p1("Ana",19);
     Person p2("Carlos",33);
@@ -41,7 +40,6 @@ TEST(CAL_FP04, test_addVertex) {
     net1.addVertex(p3); net1.addVertex(p4);
     EXPECT_EQ(false, net1.addVertex(p2));
     EXPECT_EQ(4, net1.getNumVertex());
-     */
 }
 
 TEST(CAL_FP04, test_removeVertex) {

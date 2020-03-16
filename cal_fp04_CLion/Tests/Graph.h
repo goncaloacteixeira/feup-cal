@@ -93,9 +93,10 @@ Vertex<T> * Graph<T>::findVertex(const T &in) const {
  */
 template <class T>
 bool Graph<T>::addVertex(const T &in) {
-	// TODO (4 lines)
-	// HINT: use the findVertex function to check if a vertex already exists
-	return false;
+	if (findVertex(in) != NULL)
+		return false;
+	vertexSet.emplace_back(new Vertex<T>(in));
+	return true;
 }
 
 /****************** 1b) addEdge ********************/
