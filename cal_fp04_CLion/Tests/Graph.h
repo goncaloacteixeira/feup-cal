@@ -260,9 +260,32 @@ vector<T> Graph<T>::bfs(const T & source) const {
 
 template<class T>
 vector<T> Graph<T>::topsort() const {
-	// TODO (26 lines)
 	vector<T> res;
-	return res;
+
+	for (auto& v : this->vertexSet)
+	    v->indegree = 0;
+
+	for (auto& v : this->vertexSet)
+	    for (auto& w : v->adj)
+	        w.dest->indegree += 1;
+
+	queue<Vertex<T>*> queue;
+	for (auto& v : this->vertexSet)
+	    if (v->indegree == 0)
+	        queue.push(v);
+
+    while (!queue.empty()) {
+        Vertex<T>* v = queue.front();
+        queue.pop();
+        res.push_back(v->info);
+        for (auto& w : v->adj) {
+            w.dest->indegree -= 1;
+            if (w.dest->indegree == 0)
+                queue.push(w.dest);
+        }
+    }
+
+	return (this->vertexSet.size() == res.size()) ? res : vector<T>{};
 }
 
 /****************** 3a) maxNewChildren (HOME WORK)  ********************/
