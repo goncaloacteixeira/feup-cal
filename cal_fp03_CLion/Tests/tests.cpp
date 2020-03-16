@@ -162,7 +162,7 @@ int testNPRandConstX(int size, string name, double dmin, NP_FUNC func, string al
 
 void testNearestPoints(NP_FUNC func, string alg) {
     cout << "algorithm; data set; time elapsed (ms); distance; point1; point2" << endl;
-    int maxTime = 10000;
+    int maxTime = 100000;
     if ( testNPFile("Pontos8", 11841.3, func, alg) > maxTime)
         return;
     if ( testNPFile("Pontos64", 556.066, func, alg) > maxTime)
@@ -234,5 +234,10 @@ TEST(CAL_FP03, testNP_DC_8Threads) {
     testNearestPoints(nearestPoints_DC_MT, "Divide and conquer with 8 threads");
 }
 
+
+TEST(CAL_FP03, testNP_DC_12Threads) {
+    setNumThreads(12);
+    testNearestPoints(nearestPoints_DC_MT, "Divide and conquer with 12 threads");
+}
 
 
