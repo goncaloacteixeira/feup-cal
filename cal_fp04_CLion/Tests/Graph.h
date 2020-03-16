@@ -108,10 +108,12 @@ bool Graph<T>::addVertex(const T &in) {
  */
 template <class T>
 bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
-	// TODO (6 lines)
-	// HINT: use findVertex to obtain the actual vertices
-	// HINT: use the next function to actually add the edge
-	return false;
+	auto v1 = findVertex(sourc);
+	auto v2 = findVertex(dest);
+	if (v1 == NULL || v2 == NULL)
+		return false;
+	v1->addEdge(v2, w);
+	return true;
 }
 
 /*
@@ -120,7 +122,7 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
  */
 template <class T>
 void Vertex<T>::addEdge(Vertex<T> *d, double w) {
-	// TODO (1 line)
+	adj.emplace_back(Edge<T>(d,w));
 }
 
 
