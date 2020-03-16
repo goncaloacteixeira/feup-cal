@@ -135,10 +135,11 @@ void Vertex<T>::addEdge(Vertex<T> *d, double w) {
  */
 template <class T>
 bool Graph<T>::removeEdge(const T &sourc, const T &dest) {
-	// TODO (5 lines)
-	// HINT: Use "findVertex" to obtain the actual vertices.
-	// HINT: Use the next function to actually remove the edge.
-	return false;
+	Vertex<T>* v1 = findVertex(sourc);
+	Vertex<T>* v2 = findVertex(dest);
+	if (v1 == NULL || v2 == NULL)
+		return false;
+	return v1->removeEdgeTo(v2);
 }
 
 /*
@@ -148,8 +149,11 @@ bool Graph<T>::removeEdge(const T &sourc, const T &dest) {
  */
 template <class T>
 bool Vertex<T>::removeEdgeTo(Vertex<T> *d) {
-	// TODO (6 lines)
-	// HINT: use an iterator to scan the "adj" vector and then erase the edge.
+	for (auto it = adj.begin(); it != adj.end(); it++)
+		if ((*it).dest == d) {
+			adj.erase(it);
+			return true;
+		}
 	return false;
 }
 
@@ -163,10 +167,17 @@ bool Vertex<T>::removeEdgeTo(Vertex<T> *d) {
  */
 template <class T>
 bool Graph<T>::removeVertex(const T &in) {
-	// TODO (10 lines)
-	// HINT: use an iterator to scan the "vertexSet" vector and then erase the vertex.
-	// HINT: take advantage of "removeEdgeTo" to remove incoming edges.
-	return false;
+	Vertex<T>* vertex = findVertex(in);
+	bool erased = false;
+	for (auto it = vertexSet.begin(); it != vertexSet.end(); it++) {
+		(*it)->removeEdgeTo(vertex);
+		removeEdge(in, (*it)->info);
+		if ((*it) == vertex) {
+			this->vertexSet.erase(it);
+			erased = true;
+		}
+	}
+	return erased;
 }
 
 
