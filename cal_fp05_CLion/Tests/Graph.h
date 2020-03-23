@@ -198,7 +198,33 @@ void Graph<T>::unweightedShortestPath(const T &orig) {
 
 template<class T>
 void Graph<T>::dijkstraShortestPath(const T &origin) {
-	// TODO
+    for (auto& v : this->vertexSet) {
+        v->dist = INF;
+        v->path = NULL;
+        v->visited = false;
+    }
+
+    auto v = this->findVertex(origin);
+    v->dist = 0;
+    v->visited = true;
+    MutablePriorityQueue<Vertex<T>> queue;
+    queue.insert(v);
+
+    while (!queue.empty()) {
+        v = queue.extractMin();
+        for (auto& w : v->adj) {
+            if (w.dest->dist > v->dist + w.weight) {
+                w.dest->dist = v->dist + w.weight;
+                w.dest->path = v;
+                if (!w.dest->visited) {
+                    queue.insert(w.dest);
+                    w.dest->visited = true;
+                }
+                else
+                    queue.decreaseKey(w.dest);
+            }
+        }
+    }
 }
 
 
