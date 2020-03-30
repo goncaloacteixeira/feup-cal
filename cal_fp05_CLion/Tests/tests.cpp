@@ -135,7 +135,6 @@ TEST(CAL_FP05, test_performance_dijkstra) {
 }
 
 
-/* //Uncomment the test below...
 TEST(CAL_FP05, test_bellmanFord) {
     Graph<int> myGraph = CreateTestGraph();
 
@@ -151,7 +150,6 @@ TEST(CAL_FP05, test_bellmanFord) {
     myGraph.bellmanFordShortestPath(7);
     checkSinglePath(myGraph.getPathTo(1), "7 6 4 3 1 ");
 }
-*/
 
 
 /* //Uncomment the test below...
