@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 void exercicio1();
 void exercicio2();
@@ -65,55 +66,80 @@ void exercicio2() {
 
     for (int i = 0; i < 7; i++) {
         gv->addEdge(i, i, i + 1, EdgeType::DIRECTED);
-        sleep(1);
-        gv->rearrange();
     }
 
-
     gv->addEdge(7, 7, 0, EdgeType::DIRECTED);
-    sleep(1);
-    gv->rearrange();
     gv->addEdge(8, 4, 9, EdgeType::DIRECTED);
-    sleep(1);
-    gv->rearrange();
     gv->addEdge(9, 9, 8, EdgeType::DIRECTED);
-    sleep(1);
-    gv->rearrange();
     gv->addEdge(10, 9, 10, EdgeType::DIRECTED);
-    sleep(1);
-    gv->rearrange();
     gv->addEdge(11, 9, 11, EdgeType::DIRECTED);
-    sleep(1);
-    gv->rearrange();
     gv->addEdge(12, 11, 12, EdgeType::DIRECTED);
-    sleep(1);
-    gv->rearrange();
     gv->addEdge(13, 11, 13, EdgeType::DIRECTED);
-    sleep(1);
-    gv->rearrange();
 
-    gv->removeNode(12);
-    sleep(1);
-    gv->rearrange();
-    gv->removeNode(13);
-    sleep(1);
-    gv->rearrange();
+    int i = 14;
 
-    gv->addNode(14, 250, 550);
-    sleep(1);
-    gv->rearrange();
-    gv->addNode(15, 350, 550);
-    sleep(1);
-    gv->rearrange();
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
+    while (true) {  // animation cycle
+        gv->removeNode(i - 2);
+        gv->removeNode(i - 1);
+        gv->addNode(i, 250, 550);
+        gv->addNode(i + 1, 350, 550);
+        gv->addEdge(i, 11, i, EdgeType::DIRECTED);
+        gv->addEdge(i + 1, 11, i + 1, EdgeType::DIRECTED);
+        sleep(1);
+        gv->rearrange();
+
+        gv->removeNode(i);
+        gv->removeNode(i + 1);
+        gv->addNode(i + 2, 200, 550);
+        gv->addNode(i + 3, 400, 550);
+        gv->addEdge(i + 4, 11, i + 2, EdgeType::DIRECTED);
+        gv->addEdge(i + 5, 11, i + 3, EdgeType::DIRECTED);
+        sleep(1);
+        gv->rearrange();
+
+        i += 4;
+    }
+#pragma clang diagnostic pop
+
 }
 
-void exercicio3()
-{
-// TODO: Implement here exercise 3!
-// To read map files, use relative paths:
-// Vertices data: "../resources/mapa1/nos.txt"
-// Edges data: "../resources/mapa1/arestas.txt"
-// ...
+void exercicio3() {
+    ifstream nodes("../resources/mapa1/nos.txt");
+    ifstream edges("../resources/mapa1/arestas.txt");
+
+    GraphViewer* gv = new GraphViewer(600, 600, false);
+    gv->createWindow(600, 600);
+
+    if (nodes.is_open()) {
+        string line;
+        while (getline(nodes, line)) {
+            stringstream ss(line);
+            vector<int> info;
+            string token;
+            while (getline(ss, token, ';')) {
+                info.push_back(stoi(token));
+            }
+            gv->addNode(info[0], info[1], info[2]);
+        }
+    }
+
+    if (edges.is_open()) {
+        string line;
+        while (getline(edges, line)) {
+            stringstream ss(line);
+            vector<int> info;
+            string token;
+            while (getline(ss, token, ';')) {
+                info.push_back(stoi(token));
+            }
+            gv->addEdge(info[0], info[1], info[2], EdgeType::UNDIRECTED);
+        }
+    }
+
+    gv->defineEdgeCurved(false);
+    gv->rearrange();
 }
 
 int main() {
@@ -125,13 +151,13 @@ int main() {
     /*
       * Uncomment the line below to run Exercise 2
       */
-    exercicio2();
+    // exercicio2();
 
     /*
       * Uncomment the line below to run Exercise 3
       */
 	//
-	//exercicio3();
+	exercicio3();
 
 	getchar();
 	return 0;
