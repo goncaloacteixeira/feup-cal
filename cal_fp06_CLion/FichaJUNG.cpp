@@ -44,6 +44,7 @@ void exercicio1() {
 
 void exercicio2() {
     GraphViewer* gv = new GraphViewer(600, 600, false);
+    gv->createWindow(600, 600);
 
     gv->addNode(0, 300, 50);
     gv->addNode(1, 318, 58);
@@ -60,7 +61,50 @@ void exercicio2() {
     gv->addNode(12, 200, 550);
     gv->addNode(13, 400, 550);
 
+    gv->rearrange();
 
+    for (int i = 0; i < 7; i++) {
+        gv->addEdge(i, i, i + 1, EdgeType::DIRECTED);
+        sleep(1);
+        gv->rearrange();
+    }
+
+
+    gv->addEdge(7, 7, 0, EdgeType::DIRECTED);
+    sleep(1);
+    gv->rearrange();
+    gv->addEdge(8, 4, 9, EdgeType::DIRECTED);
+    sleep(1);
+    gv->rearrange();
+    gv->addEdge(9, 9, 8, EdgeType::DIRECTED);
+    sleep(1);
+    gv->rearrange();
+    gv->addEdge(10, 9, 10, EdgeType::DIRECTED);
+    sleep(1);
+    gv->rearrange();
+    gv->addEdge(11, 9, 11, EdgeType::DIRECTED);
+    sleep(1);
+    gv->rearrange();
+    gv->addEdge(12, 11, 12, EdgeType::DIRECTED);
+    sleep(1);
+    gv->rearrange();
+    gv->addEdge(13, 11, 13, EdgeType::DIRECTED);
+    sleep(1);
+    gv->rearrange();
+
+    gv->removeNode(12);
+    sleep(1);
+    gv->rearrange();
+    gv->removeNode(13);
+    sleep(1);
+    gv->rearrange();
+
+    gv->addNode(14, 250, 550);
+    sleep(1);
+    gv->rearrange();
+    gv->addNode(15, 350, 550);
+    sleep(1);
+    gv->rearrange();
 }
 
 void exercicio3()
@@ -76,12 +120,12 @@ int main() {
     /*
      * Uncomment the line below to run Exercise 1
      */
-    exercicio1();
+    // exercicio1();
 
     /*
       * Uncomment the line below to run Exercise 2
       */
-    //exercicio2();
+    exercicio2();
 
     /*
       * Uncomment the line below to run Exercise 3
