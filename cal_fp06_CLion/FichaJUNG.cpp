@@ -42,10 +42,25 @@ void exercicio1() {
     gv->rearrange();
 }
 
-void exercicio2()
-{
-// TODO: Implement here exercise 2!
-// ...
+void exercicio2() {
+    GraphViewer* gv = new GraphViewer(600, 600, false);
+
+    gv->addNode(0, 300, 50);
+    gv->addNode(1, 318, 58);
+    gv->addNode(2, 325, 75);
+    gv->addNode(3, 318, 93);
+    gv->addNode(4, 300, 100);
+    gv->addNode(5, 282, 93);
+    gv->addNode(6, 275, 75);
+    gv->addNode(7, 282, 58);
+    gv->addNode(8, 150, 200);
+    gv->addNode(9, 300, 200);
+    gv->addNode(10, 450, 200);
+    gv->addNode(11, 300, 400);
+    gv->addNode(12, 200, 550);
+    gv->addNode(13, 400, 550);
+
+
 }
 
 void exercicio3()
