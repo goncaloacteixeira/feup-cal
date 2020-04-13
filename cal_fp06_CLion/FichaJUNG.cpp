@@ -156,9 +156,9 @@ int main() {
     /*
       * Uncomment the line below to run Exercise 3
       */
-	//
-	exercicio3();
+    //
+    exercicio3();
 
-	getchar();
-	return 0;
+    getchar();
+    return 0;
 }
